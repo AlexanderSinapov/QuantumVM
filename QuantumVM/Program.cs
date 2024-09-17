@@ -1,19 +1,22 @@
-﻿using System.Security.Cryptography;
-
-namespace QuantumVM
+﻿namespace QuantumVM
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            QuantumCircuits circuit = new QuantumCircuits(2);
+            // Initialize the Quantum Equation Solver with 2 qubits
+            QuantumEquationSolver solver = new QuantumEquationSolver(2);
 
-            circuit.ApplyGate(0, QuantumGates.Hadamard);
-            Console.WriteLine("Applying Hadamard gate to qubit 0: ");
-            circuit.DisplayQubitStates();
+            string quantumEquation = @"
+                H(q0);
+                X(q1);
+                CNOT(q0, q1);
+                M(q0);
+                M(q1);
+            ";
 
-            int measurment1 = circuit.MeasureQubit(0);
-            int measurment2 = circuit.MeasureQubit(1);
+            // Parse and run the quantum equation
+            solver.ParseAndRun(quantumEquation);
         }
     }
 }

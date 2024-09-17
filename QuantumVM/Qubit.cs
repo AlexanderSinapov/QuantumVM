@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Numerics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace QuantumVM
 {
     internal class Qubit
     {
-        public Complex Alpha { get; private set; } // Amplitude for |0) state
-        public Complex Beta { get; private set; } // Amplitude for |1) state
+        public Complex Alpha { get; set; } // Amplitude for |0) state
+        public Complex Beta { get; set; } // Amplitude for |1) state
 
         public Qubit()
         {

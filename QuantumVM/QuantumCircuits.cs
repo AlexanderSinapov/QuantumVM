@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuantumVM
 {
     internal class QuantumCircuits
     {
-        private List<Qubit> qubits;
+        public List<Qubit> qubits;
 
         public QuantumCircuits(int numQubits)
         {

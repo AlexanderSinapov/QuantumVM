@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuantumVM
 {
@@ -28,6 +24,14 @@ namespace QuantumVM
         {
             {1, 0 },
             {0, -1}
+        };
+
+        public static Complex[,] CNOT = new Complex[4, 4]
+        {
+            {1, 0, 0, 0 },
+            {0, 1, 0, 0 },
+            {0, 0, 0, 1 },
+            {0, 0, 1, 0 }
         };
     }
 }
