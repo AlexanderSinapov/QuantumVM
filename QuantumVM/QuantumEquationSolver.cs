@@ -49,7 +49,7 @@ namespace QuantumVM
 
         private void ApplySingleQubitGate(string instruction)
         {
-            var match = Regex.Match(instruction, @"([HXZ])\((q\d+)\)");
+            var match = Regex.Match(instruction, @"([HXZ])\s*\(\s*(q\d+)\s*\)");
             if (match.Success)
             {
                 string gateName = match.Groups[1].Value;
@@ -65,7 +65,7 @@ namespace QuantumVM
 
         private void ApplyCNOTGate(string instruction)
         {
-            var match = Regex.Match(instruction, @"CNOT\((q\d+), \s*(q\d+)\)");
+            var match = Regex.Match(instruction, @"CNOT\(\s*(q\d+)\s*,\s*(q\d+)\s*\)");
             if (match.Success)
             {
                 int controlQubit = int.Parse(match.Groups[1].Value.Substring(1));
@@ -82,14 +82,14 @@ namespace QuantumVM
             Qubit controlQubit = circuit.qubits[controlIndex];
             Qubit targetQubit = circuit.qubits[targetIndex];
 
-            // Combine the states of control and target qubits into a 4x1 vector
+            // Create combined state vector from control and target qubits
             Complex[] combinedState = new Complex[4];
-            combinedState[0] = controlQubit.Alpha * targetQubit.Alpha; // |00)
-            combinedState[1] = controlQubit.Alpha * controlQubit.Beta; // |01)
-            combinedState[2] = controlQubit.Beta * targetQubit.Alpha;  // |10)
-            combinedState[3] = controlQubit.Beta * targetQubit.Beta;   // |11)
+            combinedState[0] = controlQubit.Alpha * targetQubit.Alpha; // |00>
+            combinedState[1] = controlQubit.Alpha * targetQubit.Beta;  // |01>
+            combinedState[2] = controlQubit.Beta * targetQubit.Alpha;  // |10>
+            combinedState[3] = controlQubit.Beta * targetQubit.Beta;   // |11>
 
-            // Apply the CNOT gate (which is a 4x4 matrix)
+            // Apply CNOT gate (which is a 4x4 matrix) to the combined state
             Complex[] newState = new Complex[4];
             Complex[,] cnotGate = QuantumGates.CNOT;
 
@@ -98,16 +98,15 @@ namespace QuantumVM
                 newState[i] = Complex.Zero;
                 for (int j = 0; j < 4; j++)
                 {
-                    newState[i] += cnotGate[i, j] * combinedState[j]; 
+                    newState[i] += cnotGate[i, j] * combinedState[j];
                 }
             }
 
-            // Update the control and target qubits with the new state
-            // We decompose the resulting 4x1 state vector back into two qubits
-            controlQubit.Alpha = newState[0] + newState[1]; // |0) part of the control qubit
-            controlQubit.Beta = newState[2] + newState[3];  // |1) part of the control qubit
-            targetQubit.Alpha = newState[0] + newState[2];  // |0) part of the target qubit
-            targetQubit.Beta = newState[1] + newState[3];   // |1) part of the target qubit
+            // Decompose the new state back into control and target qubits
+            controlQubit.Alpha = newState[0] + newState[2]; // |0> part of the control qubit
+            controlQubit.Beta = newState[1] + newState[3];  // |1> part of the control qubit
+            targetQubit.Alpha = newState[0] + newState[1];  // |0> part of the target qubit
+            targetQubit.Beta = newState[2] + newState[3];   // |1> part of the target qubit
 
             // Normalize the qubits to maintain valid quantum states
             controlQubit.Normalize();

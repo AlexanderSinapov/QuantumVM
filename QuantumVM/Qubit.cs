@@ -5,8 +5,8 @@ namespace QuantumVM
 {
     internal class Qubit
     {
-        public Complex Alpha { get; set; } // Amplitude for |0) state
-        public Complex Beta { get; set; } // Amplitude for |1) state
+        public Complex Alpha { get; set; } // Amplitude for |0> state
+        public Complex Beta { get; set; } // Amplitude for |1> state
 
         public Qubit()
         {
@@ -29,32 +29,30 @@ namespace QuantumVM
         {
             double magnitude = Math.Sqrt(Math.Pow(Alpha.Magnitude, 2) + Math.Pow(Beta.Magnitude, 2));
 
-            Alpha /= magnitude;
-            Beta /= magnitude;
+            if (magnitude != 0)
+            {
+                Alpha /= magnitude;
+                Beta /= magnitude;
+            }
         }
 
         public int Measure()
         {
-            // Measurement based on quantum probability of Alpha and Beta
-
             double probabilityZero = Math.Pow(Alpha.Magnitude, 2);
             Random random = new Random();
 
             if (random.NextDouble() < probabilityZero)
             {
-                // Collapse the qubit to |0)
                 Alpha = new Complex(1, 0);
                 Beta = new Complex(0, 0);
                 return 0;
             }
             else
             {
-                // Collapse the qubit to |1)
                 Alpha = new Complex(0, 0);
                 Beta = new Complex(1, 0);
                 return 1;
             }
-            Console.WriteLine(Measure());
         }
     }
 }
