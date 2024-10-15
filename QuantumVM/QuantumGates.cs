@@ -33,5 +33,11 @@ namespace QuantumVM
             {0, 0, 0, 1 },
             {0, 0, 1, 0 }
         };
+
+        public static Complex[,] PauliY = new Complex[2, 2]
+        {
+            {new Complex(0, 0), -Complex.ImaginaryOne },
+            {Complex.ImaginaryOne,  new Complex(0, 0)},
+        };
     }
 }

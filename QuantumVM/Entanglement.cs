@@ -69,6 +69,8 @@ namespace QuantumVM
                     Vector2 mousePos = Raylib.GetMousePosition();
                     particle1.X = (mousePos.X / screenWidth) * 10 - 5;  // Mapping mouse X to 3D
                     particle1.Z = (mousePos.Y / screenHeight) * 10 - 5; // Mapping mouse Y to 3D
+                    Console.WriteLine(quantumCircuit.MeasureQubit(0));
+                    Console.WriteLine(quantumCircuit.MeasureQubit(1));
                 }
 
                 // Simulate entanglement: Particle2 mirrors Particle1's movement

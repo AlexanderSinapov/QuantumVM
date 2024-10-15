@@ -18,7 +18,8 @@ namespace QuantumVM
             {
                 {"H", QuantumGates.Hadamard },
                 {"X", QuantumGates.PauliX },
-                {"Z", QuantumGates.PauliZ }
+                {"Z", QuantumGates.PauliZ },
+                {"Y", QuantumGates.PauliY },
             };
         }
 
@@ -30,7 +31,7 @@ namespace QuantumVM
             {
                 string trimmedInstruction = instruction.Trim();
 
-                if (trimmedInstruction.StartsWith("H") || trimmedInstruction.StartsWith("X") || trimmedInstruction.StartsWith("Z"))
+                if (trimmedInstruction.StartsWith("H") || trimmedInstruction.StartsWith("X") || trimmedInstruction.StartsWith("Z") || trimmedInstruction.StartsWith("Y"))
                 {
                     ApplySingleQubitGate(trimmedInstruction);
                 }
@@ -49,7 +50,7 @@ namespace QuantumVM
 
         private void ApplySingleQubitGate(string instruction)
         {
-            var match = Regex.Match(instruction, @"([HXZ])\s*\(\s*(q\d+)\s*\)");
+            var match = Regex.Match(instruction, @"([HXZY])\s*\(\s*(q\d+)\s*\)");
             if (match.Success)
             {
                 string gateName = match.Groups[1].Value;
