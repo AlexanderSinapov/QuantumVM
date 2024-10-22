@@ -20,6 +20,10 @@ namespace QuantumVM
                 {"X", QuantumGates.PauliX },
                 {"Z", QuantumGates.PauliZ },
                 {"Y", QuantumGates.PauliY },
+                {"P", QuantumGates.Phase },
+                {"T", QuantumGates.TGate },
+                {"C", QuantumGates.CZ },
+                {"S", QuantumGates.SWAP },
             };
         }
 
@@ -50,11 +54,27 @@ namespace QuantumVM
 
         private void ApplySingleQubitGate(string instruction)
         {
-            var match = Regex.Match(instruction, @"([HXZY])\s*\(\s*(q\d+)\s*\)");
+            var match = Regex.Match(instruction, @"([HXZYPCS])\s*\(\s*(q\d+)\s*\)");
             if (match.Success)
             {
                 string gateName = match.Groups[1].Value;
                 int qubitIndex = int.Parse(match.Groups[2].Value.Substring(1));
+
+                if (gateMap.ContainsKey(gateName))
+                {
+                    Console.WriteLine($"Applying {gateName} gate to qubit {qubitIndex}");
+                    circuit.ApplyGate(qubitIndex, gateMap[gateName]);
+                }
+            }
+        }
+
+        private void TGate(string instruction)
+        {
+            var match = Regex.Match(instruction, @"([T])\s*\(\s*(q\d+)\s*\)");
+            if (match.Success)
+            {
+                string gateName = match.Groups[5].Value;
+                int qubitIndex = int.Parse(match.Groups[5].Value.Substring(1));
 
                 if (gateMap.ContainsKey(gateName))
                 {

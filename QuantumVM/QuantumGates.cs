@@ -5,6 +5,8 @@ namespace QuantumVM
 {
     internal class QuantumGates
     {
+
+
         // Hadamard Gate
         public static Complex[,] Hadamard = new Complex[2, 2]
         {
@@ -38,6 +40,34 @@ namespace QuantumVM
         {
             {new Complex(0, 0), -Complex.ImaginaryOne },
             {Complex.ImaginaryOne,  new Complex(0, 0)},
+        };
+
+        public static Complex[,] Phase = new Complex[2, 2]
+        {
+            {1, 0 },
+            {0, Complex.ImaginaryOne },
+        };
+
+        public static Complex[,] TGate = new Complex[2, 2]
+        {
+            {1, 0},
+            {0, Math.Pow(Math.E, (Math.Sqrt(-1) * Math.PI)) / 4},
+        };
+
+        public static Complex[,] CZ = new Complex[4, 4]
+        {
+            {1, 0, 0, 0},
+            {0, 1, 0, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, -1},
+        };
+
+        public static Complex[,] SWAP = new Complex[4, 4]
+        {
+            {1, 0, 0, 0 },
+            {0, 0, 1, 0 },
+            {0, 1, 0, 0 },
+            {0, 0, 0, 1 },
         };
     }
 }
