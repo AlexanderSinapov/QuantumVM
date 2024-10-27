@@ -14,6 +14,7 @@ namespace QuantumVM
             // Initialize Quantum Equation Solver with 2 qubits
             QuantumEquationSolver solver = new QuantumEquationSolver(2);
             Regex regex = new Regex(@"\bsimulate quantum entanglement\b", RegexOptions.IgnoreCase);
+            Regex psi = new Regex(@"\bpsi\b", RegexOptions.IgnoreCase);
             Regex help = new Regex(@"\bhelp\b", RegexOptions.IgnoreCase);
 
             if (regex.IsMatch(input))
@@ -34,6 +35,20 @@ namespace QuantumVM
             else if (help.IsMatch(input))
             {
                 DisplayHelpMenu(); // Call the method to display and navigate the menu
+            }
+            else if (psi.IsMatch(input))
+            {
+                int x = int.Parse(Console.ReadLine());
+                int y = int.Parse(Console.ReadLine());
+                int z = int.Parse(Console.ReadLine());
+                int Lx = int.Parse(Console.ReadLine());
+                int Ly = int.Parse(Console.ReadLine());
+                int Lz = int.Parse(Console.ReadLine());
+                int Nx = int.Parse(Console.ReadLine());
+                int Ny = int.Parse(Console.ReadLine());
+                int Nz = int.Parse(Console.ReadLine());
+
+                WavevFCollapse wavevFunc = new WavevFCollapse(x, y, z, Lx, Ly, Lz, Nx, Ny, Nz); // 
             }
             else
             {
@@ -104,6 +119,7 @@ namespace QuantumVM
                         Console.WriteLine("Z(q0 or q1)                     //Applies Pauli-Z gate on qubit 0 or 1");
                         Console.WriteLine("CNOT(q0 or q1)                  //Applies CNOT gate on qubit 0 or 1");
                         Console.WriteLine("M(q0 or q1)                     //Measures qubit 0 or 1");
+                        Console.WriteLine("psi                             //Calls a wave function and then you input parameters");
                         break;
                     case 1:
                         Console.WriteLine("Credits");
